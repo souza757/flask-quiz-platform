@@ -1,0 +1,127 @@
+{
+  "What does CPU stand for": {
+    "answers": ["Central Processing Unit", "Computer Personal Unit", "Central Power Utility", "Core Processing User"],
+    "correct_indices": [0],
+    "explanation": "The CPU is the brain of the computer that processes instructions.",
+    "difficulty": "easy"
+  },
+
+  "What type of data structure uses FIFO order": {
+    "answers": ["Queue", "Stack", "Tree", "Array"],
+    "correct_indices": [0],
+    "explanation": "FIFO means first in, first out — which is how queues operate.",
+    "difficulty": "easy"
+  },
+
+  "Which one is an output device": {
+    "answers": ["Monitor", "Keyboard", "Scanner", "Microphone"],
+    "correct_indices": [0],
+    "explanation": "A monitor outputs visual information to the user.",
+    "difficulty": "easy"
+  },
+
+  "What does RAM stand for": {
+    "answers": ["Random Access Memory", "Real Application Memory", "Rapid Action Module", "Read Access Machine"],
+    "correct_indices": [0],
+    "explanation": "RAM is temporary memory for active tasks and processes.",
+    "difficulty": "easy"
+  },
+
+  "Which of these is a web browser": {
+    "answers": ["Firefox", "Linux", "Python", "Bash"],
+    "correct_indices": [0],
+    "explanation": "Firefox is a browser used to access the internet.",
+    "difficulty": "easy"
+  },
+
+  "Which protocol is used for secure web traffic": {
+    "answers": ["HTTPS", "HTTP", "FTP", "SMTP"],
+    "correct_indices": [0],
+    "explanation": "HTTPS encrypts data sent between the web browser and the server.",
+    "difficulty": "easy"
+  },
+
+  "What is the purpose of an operating system": {
+    "answers": ["Manages hardware and software", "Compiles code", "Hosts websites", "Stores passwords"],
+    "correct_indices": [0],
+    "explanation": "The OS manages system resources, processes, and hardware access.",
+    "difficulty": "medium"
+  },
+
+  "What type of database uses tables, rows, and columns": {
+    "answers": ["Relational database", "NoSQL database", "Graph database", "Blockchain"],
+    "correct_indices": [0],
+    "explanation": "Relational databases like MySQL and PostgreSQL store data in table format.",
+    "difficulty": "medium"
+  },
+
+  "Which search algorithm divides the list in half repeatedly": {
+    "answers": ["Binary search", "Linear search", "Depth-first search", "Breadth-first search"],
+    "correct_indices": [0],
+    "explanation": "Binary search cuts the search space in half each step, giving O(log n) time.",
+    "difficulty": "medium"
+  },
+
+  "What is the function of a router in a network": {
+    "answers": ["Directs traffic between networks", "Stores website data", "Encrypts files", "Compiles programs"],
+    "correct_indices": [0],
+    "explanation": "Routers forward data packets between different networks.",
+    "difficulty": "medium"
+  },
+
+  "Which of the following is an example of cloud computing": {
+    "answers": ["Google Drive", "USB flash drive", "Local SSD", "DVD storage"],
+    "correct_indices": [0],
+    "explanation": "Google Drive stores and processes data over the internet — the cloud.",
+    "difficulty": "medium"
+  },
+
+  "Which statement about APIs is true": {
+    "answers": ["APIs allow software systems to communicate", "APIs are computer viruses", "APIs are types of hardware", "APIs replace operating systems"],
+    "correct_indices": [0],
+    "explanation": "APIs define rules for communication between different software systems.",
+    "difficulty": "medium"
+  },
+
+  "What is Big O notation used for": {
+    "answers": ["Describing algorithm efficiency", "Drawing UI layouts", "Compiling code", "Rendering graphics"],
+    "correct_indices": [0],
+    "explanation": "Big O notation measures algorithm performance as input size grows.",
+    "difficulty": "hard"
+  },
+
+  "What does ACID stand for in databases": {
+    "answers": ["Atomicity Consistency Isolation Durability", "Access Control Internal Data", "Active CPU Integrated Database", "Audit Control Index Data"],
+    "correct_indices": [0],
+    "explanation": "ACID describes properties that ensure reliable database transactions.",
+    "difficulty": "hard"
+  },
+
+  "Which encryption method uses a public and private key pair": {
+    "answers": ["Asymmetric encryption", "Symmetric encryption", "Hashing", "Steganography"],
+    "correct_indices": [0],
+    "explanation": "Asymmetric encryption uses key pairs — one public, one private.",
+    "difficulty": "hard"
+  },
+
+  "Which scheduling algorithm selects the process with the shortest next CPU burst": {
+    "answers": ["SJF", "FIFO", "Round Robin", "Priority Scheduling"],
+    "correct_indices": [0],
+    "explanation": "Shortest Job First chooses the shortest upcoming CPU burst.",
+    "difficulty": "hard"
+  },
+
+  "What is a race condition": {
+    "answers": ["Multiple threads accessing shared data unpredictably", "A fast CPU overclock", "A dead network connection", "A corrupted database file"],
+    "correct_indices": [0],
+    "explanation": "Race conditions occur when parallel tasks access shared resources without control.",
+    "difficulty": "hard"
+  },
+
+  "What is normalization in databases": {
+    "answers": ["Organizing data to reduce redundancy", "Encrypting stored data", "Creating user roles", "Optimizing CPU usage"],
+    "correct_indices": [0],
+    "explanation": "Normalization removes duplicate data and improves structure.",
+    "difficulty": "hard"
+  }
+}

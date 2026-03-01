@@ -1,0 +1,115 @@
+ <!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Christa's Quiz Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Christa's Quiz Game</h1>
+      {% if champion %}
+        <div class="champion-banner">
+          <span>Grand champion:</span>
+          <strong>{{ champion.user }}</strong>
+          <span>{{ champion.num_correct }}/{{ champion.num_asked }}
+            ({{ "%.0f"|format(champion.percent) }}%)</span>
+        </div>
+      {% else %}
+        <div class="champion-banner">
+          <span>No grand champion yet. Be the first.</span>
+        </div>
+      {% endif %}
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for msg in messages %}
+            <p>{{ msg }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main class="main-layout">
+      <section class="quiz-column">
+        <div class="card card-controls">
+          <h2>Start a quiz</h2>
+          <form action="{{ url_for('start_quiz') }}" method="post">
+            <div class="form-row">
+              <label for="username">Name</label>
+              <input id="username" name="username" type="text"
+                     placeholder="Enter your name">
+            </div>
+
+            <div class="form-row">
+              <label for="difficulty">Difficulty</label>
+              <select id="difficulty" name="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="num_questions">
+                Number of questions <span class="muted">(max 6)</span>
+              </label>
+              <input id="num_questions"
+                     name="num_questions"
+                     type="number"
+                     min="1"
+                     max="6"
+                     value="5">
+            </div>
+
+            <p class="hint">
+              Each question has a 20 second time limit. If time runs out,
+              it's counted as a timeout and the quiz moves on.
+            </p>
+
+            <button type="submit" class="btn primary">Start quiz</button>
+          </form>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card card-leaderboard">
+          <h2>Leaderboard</h2>
+          {% if leaderboard %}
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Player</th>
+                  <th>Score</th>
+                  <th>Diff</th>
+                  <th>Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in leaderboard %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row.user }}</td>
+                    <td>{{ row.num_correct }}/{{ row.num_asked }}
+                      ({{ "%.0f"|format(row.percent) }}%)</td>
+                    <td>{{ row.difficulty|capitalize }}</td>
+                    <td>{{ row.points }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p class="muted">No scores yet. Play a quiz to create the first record!</p>
+          {% endif %}
+        </div>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>

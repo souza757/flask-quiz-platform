@@ -1,0 +1,221 @@
+<!-- templates/quiz.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quiz | Christa's Quiz Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>Christa's Quiz Game</h1>
+
+      {% if mode != "summary" and quiz %}
+        <div class="champion-banner small">
+          <span>Player:</span>
+          <strong>{{ quiz.username }}</strong>
+          <span>Difficulty: {{ quiz.difficulty|capitalize }}</span>
+        </div>
+      {% endif %}
+
+      {% if mode == "summary" and champion %}
+        <div class="champion-banner">
+          <span>Grand champion:</span>
+          <strong>{{ champion.user }}</strong>
+          <span>{{ champion.num_correct }}/{{ champion.num_asked }}
+            ({{ "%.0f"|format(champion.percent) }}%)</span>
+        </div>
+      {% endif %}
+    </header>
+
+    {% if mode == "question" %}
+      <main class="main-layout single">
+        <section class="quiz-column">
+          <div class="card card-quiz">
+            <div class="quiz-header">
+              <span>
+                Question {{ quiz.current_index + 1 }}
+                of {{ quiz.num_questions }}
+              </span>
+              <span class="timer {% if time_left <= 5 %}timer-low{% endif %}">
+                ~{{ time_left }} s left
+              </span>
+            </div>
+
+            <div class="question-text">
+              {{ question.question }}?
+            </div>
+
+            <form method="post" action="{{ url_for('quiz') }}">
+              <div class="answers-container">
+                {% for ans in question.answers %}
+                  <label class="answer-row">
+                    <input type="radio" name="answer" value="{{ loop.index0 }}">
+                    <span class="answer-label">
+                      {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}.
+                    </span>
+                    <span class="answer-text">{{ ans }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+
+              <p class="hint">
+                You have {{ time_limit }} seconds to answer this question.
+                If time runs out, it counts as a timeout.
+              </p>
+
+              <button type="submit" class="btn primary">
+                Submit answer
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+    {% elif mode == "feedback" %}
+      <main class="main-layout single">
+        <section class="quiz-column">
+          <div class="card card-quiz">
+            <div class="quiz-header">
+              <span>Answer feedback</span>
+              <span class="timer">
+                Time limit: {{ time_limit }} s
+              </span>
+            </div>
+
+            <div class="question-text">
+              {{ feedback.question }}?
+            </div>
+
+            <div class="answers-container">
+              {% for ans in feedback.answers %}
+                {% set idx = loop.index0 %}
+                {% set is_correct = idx in feedback.correct_indices %}
+                {% set is_selected = feedback.selected_index is not none and idx == feedback.selected_index %}
+                <div class="answer-row
+                  {% if is_correct %} correct{% endif %}
+                  {% if is_selected and not is_correct %} incorrect{% endif %}
+                ">
+                  <span class="answer-label">
+                    {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}.
+                  </span>
+                  <span class="answer-text">{{ ans }}</span>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="feedback-message">
+              {% if feedback.timed_out %}
+                <p class="error-message">
+                  Time's up. This question was marked as timed out.
+                </p>
+              {% elif feedback.is_correct %}
+                <p class="success-message">
+                  Correct! Nice job.
+                </p>
+              {% else %}
+                <p class="error-message">
+                  Incorrect. Review the explanation below.
+                </p>
+              {% endif %}
+            </div>
+
+            {% if feedback.explanation %}
+              <div class="explanation">
+                <h3>Explanation</h3>
+                <p>{{ feedback.explanation }}</p>
+              </div>
+            {% endif %}
+
+            <div class="next-actions">
+              {% if is_last %}
+                <a href="{{ url_for('summary') }}" class="btn primary">
+                  See final results
+                </a>
+              {% else %}
+                <a href="{{ url_for('quiz') }}" class="btn primary">
+                  Next question
+                </a>
+              {% endif %}
+              <a href="{{ url_for('index') }}" class="btn secondary">
+                Quit quiz
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+    {% elif mode == "summary" %}
+      <main class="main-layout">
+        <section class="quiz-column">
+          <div class="card card-summary">
+            <h2>Quiz summary for {{ summary.username }}</h2>
+            <p id="summaryMain">
+              You answered {{ summary.num_correct }} out of {{ summary.num_questions }}
+              questions correctly ({{ "%.0f"|format(summary.best_percent) }}%).
+            </p>
+            <ul id="summaryDetails">
+              <li>Difficulty: {{ summary.difficulty|capitalize }}</li>
+              <li>Incorrect answers: {{ summary.num_incorrect }}</li>
+              <li>Timed out: {{ summary.num_timed_out }}</li>
+              <li>Total time: {{ "%.1f"|format(summary.seconds_taken) }} seconds</li>
+              <li>Weighted points: {{ summary.points }}</li>
+            </ul>
+
+            {% if summary.new_personal_best %}
+              <p class="summary-best">
+                New personal best! Your record has been saved to the leaderboard.
+              </p>
+            {% else %}
+              <p class="summary-best">
+                Your score has been recorded if it was better than your previous best.
+              </p>
+            {% endif %}
+
+            <div class="next-actions">
+              <a href="{{ url_for('index') }}" class="btn primary">
+                Play again
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <div class="card card-leaderboard">
+            <h2>Leaderboard</h2>
+            {% if leaderboard %}
+              <table class="leaderboard-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                    <th>Diff</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in leaderboard %}
+                    <tr>
+                      <td>{{ loop.index }}</td>
+                      <td>{{ row.user }}</td>
+                      <td>{{ row.num_correct }}/{{ row.num_asked }}
+                        ({{ "%.0f"|format(row.percent) }}%)</td>
+                      <td>{{ row.difficulty|capitalize }}</td>
+                      <td>{{ row.points }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p class="muted">No scores yet.</p>
+            {% endif %}
+          </div>
+        </aside>
+      </main>
+    {% endif %}
+  </div>
+</body>
+</html>

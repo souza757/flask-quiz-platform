@@ -1,0 +1,38 @@
+{
+  "Christa": {
+    "user": "Christa",
+    "difficulty": "easy",
+    "best_percent": 1.0,
+    "num_correct": 6,
+    "num_asked": 6,
+    "num_incorrect": 0,
+    "num_timed_out": 0,
+    "seconds_taken": 24.728821992874146,
+    "points": 6,
+    "timestamp": "2025-11-20 10:06:30"
+  },
+  "cc": {
+    "user": "cc",
+    "difficulty": "easy",
+    "best_percent": 0.4,
+    "num_correct": 2,
+    "num_asked": 5,
+    "num_incorrect": 3,
+    "num_timed_out": 0,
+    "seconds_taken": 11.489362955093384,
+    "points": 2,
+    "timestamp": "2025-11-20 18:59:53"
+  },
+  "CC": {
+    "user": "CC",
+    "difficulty": "easy",
+    "best_percent": 0.6,
+    "num_correct": 3,
+    "num_asked": 5,
+    "num_incorrect": 2,
+    "num_timed_out": 0,
+    "seconds_taken": 35.2216579914093,
+    "points": 3,
+    "timestamp": "2026-03-01 13:17:16"
+  }
+}
